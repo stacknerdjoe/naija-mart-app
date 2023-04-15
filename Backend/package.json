@@ -1,0 +1,22 @@
+{
+  "name": "tddd27_backend",
+  "version": "1.0.0",
+  "description": "This a movie review project",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.liu.se/onyjo345/tddd27_2023_naijamartproject"
+  },
+  "author": "onyjo345",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

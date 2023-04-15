@@ -20,7 +20,6 @@ Overall, It will provide a platform for movie enthusiasts, filmmakers and the fi
       b.Css
          i.Tailwind CSS
 ### 2.Backend
-      a.Business Logic
         i.Node Js
 ###  Databases
         i.MongoDB
