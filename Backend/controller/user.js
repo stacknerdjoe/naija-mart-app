@@ -65,9 +65,86 @@ exports.verifyEmail = async(req, res) => {
 
     if(user.isVerified) return res.json({error: 'User is already verified!'});
 
-    const token = await EmailVerificationToken.findOne({owner: userId});
+    const token = await EmailVerificationToken.findOne({owner: userId})
     if(!token) return res.json({error: 'Token not found!'});
 
+    const isMatched = await token.compareToken(OTP)
+    if(!isMatched) return res.json({error: 'Kindly input a valid OTP!'});
+
+    user.isVerified = true;
+    await user.save();
+
+    await EmailVerificationToken.findByIdAndDelete(token._id);
+
+    var transport = nodemailer.createTransport({
+        host: "sandbox.smtp.mailtrap.io",
+        port: 2525,
+        auth: {
+          user: "32c5f4d2a2445c",
+          pass: "75c168cd11c251"
+        }
+      });
+
+    transport.sendMail({
+        from: 'verification@naijamart.com',
+        to: user.email,
+        subject: 'Welcome Email',
+        html: '<h1>Welcome to Naijamart, Thank you for choosing us.</h1>',
+    }); 
+
+    res.json({
+        message: 'Your email is verified'
+    });
 };
 
+exports.resendEmailVerificationToken = async(req, res) => {
+    const {userId} = req.body;
+
+    const user = await User.findById(userId);
+    if(!user) return res.json({error: 'User not found'});
+
+    if(user.isVerified) return res.json({error: 'This email is already verified'});
+
+    const aleadyHasToken = await EmailVerificationToken.findOne({
+        owner: userId
+    });
+    if(aleadyHasToken) return res.json({error: 'Can only request another token after an hour!'})
+
+     //generate 6 digits otp
+     let OTP = '';
+     for(let i = 0; i <= 5; i++){
+         const randomValue = Math.round(Math.random() * 9)
+         OTP += randomValue;
+     }
+ 
+ 
+     //store otp inside database
+     const newEmailVerificationToken = new EmailVerificationToken({
+         owner: newUser._id,
+         token: OTP,
+     });
+ 
+     await newEmailVerificationToken.save();
+ 
+     //send same otp to the user
+ 
+     var transport = nodemailer.createTransport({
+         host: "sandbox.smtp.mailtrap.io",
+         port: 2525,
+         auth: {
+           user: "32c5f4d2a2445c",
+           pass: "75c168cd11c251"
+         }
+       });
+ 
+     transport.sendMail({
+         from: 'verification@naijamart.com',
+         to: user.email,
+         subject: 'Email Verification',
+         html: `
+             <p> Your verification One Time Password </p>
+             <h1> ${OTP}</h1>
+         `,
+     });  
+}
 
