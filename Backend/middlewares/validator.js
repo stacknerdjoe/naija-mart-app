@@ -9,8 +9,16 @@ exports.userValidator = [
     .isEmpty()
     .withMessage('No password found!')
     .isLength({min: 6, max: 18})
-    .withMessage('Password must have at least 6 characters!')
+    .withMessage('Password must have at least 6 characters!'),
 ];
+
+exports.validatePassword = [ check('newPassword')
+.trim()
+.not()
+.isEmpty()
+.withMessage('No password found!')
+.isLength({min: 6, max: 18})
+.withMessage('Password must have at least 6 characters!')];
 
 exports.validate = (req, res, next) => {
     const error = validationResult(req).array();
