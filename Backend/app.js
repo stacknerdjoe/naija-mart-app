@@ -1,13 +1,17 @@
 const express = require('express');
+require('express-async-errors');
+const morgan = require('morgan');
 require('./db');
 const userRouter = require('./routes/user');
+const { errorHandler } = require('./middlewares/error');
 
 const app = express();
 
 app.use(express.json()); 
+app.use(morgan('dev'));
 app.use('/api/user', userRouter);
 
-
+app.use(errorHandler);
 
 app.get ('/about', (req, res) => {
     res.send("<h1> Hej, This is Harry from Backend ABOUT <h1>");

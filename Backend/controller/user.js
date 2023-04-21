@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const EmailVerificationToken = require('../models/emailVerificationTokens');
 const PasswordResetToken = require('../models/passwordResetToken');
@@ -192,4 +192,22 @@ exports.resetPassword = async (req, res) => {
 
 res.json({message: 'password reset successfully, you can now login with new password'})
     
+};
+
+//signing in User
+
+exports.signIn = async (req, res) => {
+    const {email, password} = req.body;
+
+    const user = await User.findOne({email})
+    if(!user) return sendError(res, 'email or password is invalid!');
+
+    const matched = await user.comparePassword(password);
+    if(!matched) return sendError(res, 'email or password is invalid!');
+
+    const {_id, name } = user;
+
+    const jwtToken = jwt.sign({userId: _id}, 'kjfsjgfkJYTDUKILOIKLYDRTSDKIUOKfdz');
+
+    res.json({user: {id: _id, name, email, token: jwtToken}});
 };

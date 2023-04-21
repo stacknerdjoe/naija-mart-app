@@ -20,6 +20,15 @@ exports.validatePassword = [ check('newPassword')
 .isLength({min: 6, max: 18})
 .withMessage('Password must have at least 6 characters!')];
 
+exports.signInValidator  = [
+    check('email').normalizeEmail().isEmail().withMessage('Invalid email address!'),
+    check('password')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('No password found!'),
+];
+
 exports.validate = (req, res, next) => {
     const error = validationResult(req).array();
     if(error.length){

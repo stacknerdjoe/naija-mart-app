@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-exports.sendError = (res, req, statusCode = 401) => {
+exports.sendError = (res, error, statusCode = 401) => {
     res.status(statusCode).json({ error });
 }
 
