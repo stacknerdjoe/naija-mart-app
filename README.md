@@ -12,6 +12,7 @@ Overall, It will provide a platform for movie enthusiasts, filmmakers and the fi
 5.Create new actors and then add inside movies.
 6.Consist of a UI like slider, live search, rating model.
 7.Cloud storage for Images and Videos.
+8.Light and dark mode.
 
 ## Technological Requirements:
 ### 1.Frontend
