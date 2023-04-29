@@ -3,6 +3,7 @@ import Container from '../container';
 import Title from '../form/Title';
 import FormInputer from '../form/FormInputer';
 import Submit from '../form/Submit';
+import MyLinks from '../MyLinks';
 
 export default function Signup() {
     return <div className='fixed inset-0 bg-primary -z-10 flex justify-center items-center'>
@@ -15,8 +16,8 @@ export default function Signup() {
                 <Submit value='Sign up' />
 
                 <div className="flex justify-between">
-                    <a className='text-dark-subtle hover:text-white transition' href="#">Forgot Password ?</a>
-                    <a className='text-dark-subtle hover:text-white transition' href="#">Sign in</a>
+                    <MyLinks to='/auth/forget-password'>Forgot Password ?</MyLinks>
+                    <MyLinks to='/auth/signin'>Sign in</MyLinks>
                 </div>
             </form>
         </Container>

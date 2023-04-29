@@ -3,9 +3,11 @@ import Container from '../container';
 import Title from '../form/Title';
 import FormInputer from '../form/FormInputer';
 import Submit from '../form/Submit';
+import MyLinks from '../MyLinks';
+import { Link } from 'react-router-dom';
 
 export default function Signin() {
-    return <div className='fixed inset-0 bg-primary -z-10 flex justify-center items-center'>
+    return  <div className='fixed inset-0 bg-primary -z-10 flex justify-center items-center'>
         <Container>
             <form className='bg-secondary rounded p-6 w-72 space-y-6'>
                 <Title>Sign in</Title>
@@ -14,11 +16,11 @@ export default function Signin() {
                 <Submit value='Sign in' />
 
                 <div className="flex justify-between">
-                    <a className='text-dark-subtle hover:text-white transition' href="#">Forgot Password ?</a>
-                    <a className='text-dark-subtle hover:text-white transition' href="#">Sign up</a>
+                    <MyLinks to='/auth/forget-password'>Forgot Password ?</MyLinks>
+                    <MyLinks to='/auth/signup'>Sign up</MyLinks>
                 </div>
             </form>
         </Container>
-    </div>;
+    </div>
 
 }
