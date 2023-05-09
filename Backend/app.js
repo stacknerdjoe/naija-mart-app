@@ -4,12 +4,17 @@ const morgan = require('morgan');
 require('./db');
 const userRouter = require('./routes/user');
 const { errorHandler } = require('./middlewares/error');
+const cors = require('cors');
+const { handleNotFound } = require('./utilities/helper');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json()); 
 app.use(morgan('dev'));
 app.use('/api/user', userRouter);
+
+app.use('/*', handleNotFound);
 
 app.use(errorHandler);
 
