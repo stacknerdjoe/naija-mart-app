@@ -4,13 +4,14 @@ import Title from '../form/Title';
 import FormInputer from '../form/FormInputer';
 import Submit from '../form/Submit';
 import MyLinks from '../MyLinks';
+import FormContainer from '../form/formContainer';
 
 
 export default function Signin() {
 
    
 
-    return <div className='fixed inset-0 bg-primary -z-10 flex justify-center items-center'>
+    return <FormContainer>
         <Container>
             <form className='bg-secondary rounded p-6 w-72 space-y-6'>
                 <Title>Sign in</Title>
@@ -24,6 +25,6 @@ export default function Signin() {
                 </div>
             </form>
         </Container>
-    </div>
+    </FormContainer>
 
 }
