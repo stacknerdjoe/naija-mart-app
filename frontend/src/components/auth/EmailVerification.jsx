@@ -4,11 +4,31 @@ import Title from '../form/Title'
 import Submit from '../form/Submit'
 
 const OTP_LENGTH = 6;
+let currentOTPIndex;
 
+const isValidOTP = (otp) => {
+    let valid = false;
+  
+    for (let val of otp) {
+      valid = !isNaN(parseInt(val));
+      if (!valid) break;
+    }
+  
+    return valid;
+  };
+
+  
 export default function EmailVerification() {
     const [otp, setOtp] = useState(new Array(OTP_LENGTH).fill(''))
     const [activeOtpIndex, setActiveOtpIndex] = useState(0);
+
+    
     const inputRef = useRef();
+
+    const { state } = useLocation();
+    const user = state?.user;
+  
+    const navigate = useNavigate();
 
     const focusNextInputField = (index) => {
         setActiveOtpIndex(index + 1);
@@ -44,7 +64,11 @@ export default function EmailVerification() {
     useEffect(() => {
         inputRef.current?.focus();
 
-    }, [activeOtpIndex])
+    }, [activeOtpIndex]);
+
+    useEffect(() => {
+        if (!user) navigate("/not-found");
+      }, [user]);
 
     return (
         <div className='fixed inset-0 bg-primary -z-10 flex justify-center items-center'>

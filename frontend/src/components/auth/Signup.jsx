@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { createUser } from "../../api/auth";
+import { useAuth, useNotification } from "../../hooks";
+import { isValidEmail } from "../../utilities/helper";
+import { commonModalClasses } from "../../utilities/theme";
 import Container from '../container';
 import Title from '../form/Title';
 import FormInputer from '../form/FormInputer';
 import Submit from '../form/Submit';
 import MyLinks from '../MyLinks';
 import FormContainer from '../form/formContainer';
-import { createUser } from '../../api/auth';
+
 
 const validateUserInfo = ({ name, email, password }) => {
-    const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const isValidName = /^[a-z A-Z]+$/;
 
     if (!name.trim()) return { ok: false, error: 'Name is missing!' };
@@ -30,6 +34,13 @@ export default function Signup() {
         email: '',
         password: '',
     });
+
+    const navigate = useNavigate();
+    const { authInfo } = useAuth();
+    const { isLoggedIn } = authInfo;
+
+    const { updateNotification } = useNotification();
+
     const handleChange = ({ target }) => {
         const { value, name } = target;
         setUserInfo({ ...userInfo, [name]: value })
@@ -40,31 +51,66 @@ export default function Signup() {
         e.preventDefault();
         const { ok, error } = validateUserInfo(userInfo);
 
-        if (!ok) return console.log(error);
+        if (!ok) return updateNotification("error", error);
+        
         const response = await createUser(userInfo);
-        if(response.error) return console.log(response.error);
-        console.log(response.user)
-    }
+        if (response.error) return console.log(response.error);
+        //console.log(response.user)
+
+        navigate("/auth/verification", {
+            state: { user: response.user },
+            replace: true,
+        });
+    
+
+    };
+
+    useEffect(() => {
+        // we want to move our user to somewhere else
+        if (isLoggedIn) navigate("/");
+      }, [isLoggedIn]);
+
 
     const { name, email, password } = userInfo
 
 
 
-    return <FormContainer>
-        <Container>
-            <form onSubmit={handleSubmit} className='bg-secondary rounded p-6 w-72 space-y-6'>
-                <Title>Sign up</Title>
-                <FormInputer value={name} onChange={handleChange} label='Name' placeholder='john Doe' name='name' />
-                <FormInputer value={email} onChange={handleChange} label='Email' placeholder='johndoe@email.com' name='email' />
-                <FormInputer value={password} onChange={handleChange} label='Password' placeholder='********' name='password' type='password' />
-                <Submit value='Sign up' />
-
-                <div className="flex justify-between">
-                    <MyLinks to='/auth/forget-password'>Forgot Password ?</MyLinks>
-                    <MyLinks to='/auth/signin'>Sign in</MyLinks>
-                </div>
+    return (
+        <FormContainer>
+          <Container>
+            <form onSubmit={handleSubmit} className={commonModalClasses + " w-72"}>
+              <Title>Sign up</Title>
+              <FormInputer
+                value={name}
+                onChange={handleChange}
+                label="Name"
+                placeholder="John Doe"
+                name="name"
+              />
+              <FormInputer
+                value={email}
+                onChange={handleChange}
+                label="Email"
+                placeholder="john@email.com"
+                name="email"
+              />
+              <FormInputer
+                value={password}
+                onChange={handleChange}
+                label="Password"
+                placeholder="********"
+                name="password"
+                type="password"
+              />
+              <Submit value="Sign up" />
+    
+              <div className="flex justify-between">
+                <MyLinks to="/auth/forget-password">Forget password</MyLinks>
+                <MyLinks to="/auth/signin">Sign in</MyLinks>
+              </div>
             </form>
-        </Container>
-    </FormContainer>;
-
-}
+          </Container>
+        </FormContainer>
+      );
+    }
+    
