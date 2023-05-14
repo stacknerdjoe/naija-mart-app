@@ -2,8 +2,8 @@ import React, { createContext, useEffect } from "react";
 
 export const ThemeContext = createContext();
 
-const defaultTheme = "light";
-const darkTheme = "dark";
+const defaultTheme = 'light';
+const darkTheme = 'dark';
 
 export default function ThemeProvider({ children }) {
   const toggleTheme = () => {
@@ -26,7 +26,7 @@ export default function ThemeProvider({ children }) {
   );
 }
 
-const getTheme = () => localStorage.getItem("theme");
+const getTheme = () => localStorage.getItem('theme');
 
 const updateTheme = (theme, themeToRemove) => {
   if (themeToRemove) document.documentElement.classList.remove(themeToRemove);

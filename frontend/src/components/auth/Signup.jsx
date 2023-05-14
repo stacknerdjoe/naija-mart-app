@@ -78,20 +78,15 @@ export default function Signup() {
     return (
         <FormContainer>
           <Container>
-            <form onSubmit={handleSubmit} className={commonModalClasses + " w-72"}>
+            <form onSubmit={handleSubmit} className={commonModalClasses +  'w-72'}>
               <Title>Sign up</Title>
-              <FormInputer
-                value={name}
-                onChange={handleChange}
-                label="Name"
-                placeholder="John Doe"
-                name="name"
+              <FormInputer value={name} onChange={handleChange} label='Name' placeholder="John Doe" name='name'
               />
               <FormInputer
                 value={email}
                 onChange={handleChange}
                 label="Email"
-                placeholder="john@email.com"
+                placeholder="johnDoe@email.com"
                 name="email"
               />
               <FormInputer
