@@ -21,7 +21,8 @@ const actorSchema = mongoose.Schema({
         url: String,
         public_id: String,
     },
-}, {timestamps: true});
+}, { timestamps: true });
 
+actorSchema.index({ name: 'text' });
 
 module.exports = mongoose.model('Actor', actorSchema);
