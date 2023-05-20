@@ -210,9 +210,9 @@ exports.signIn = async (req, res) => {
     const matched = await user.comparePassword(password);
     if(!matched) return sendError(res, 'email or password is invalid!');
 
-    const {_id, name } = user;
+    const {_id, name, role } = user;
 
     const jwtToken = jwt.sign({userId: _id}, 'kjfsjgfkJYTDUKILOIKLYDRTSDKIUOKfdz');
 
-    res.json({user: {id: _id, name, email, token: jwtToken}});
+    res.json({user: {id: _id, name, email, role, token: jwtToken}});
 };
