@@ -6,7 +6,7 @@ const { uploadTrailer } = require('../controller/movie');
 const router = express.Router();
 
 router.post(
-    "/upload-trailer", isAuth, isAdmin, uploadVideo.single("video"), uploadTrailer
+    '/upload-trailer', isAuth, isAdmin, uploadVideo.single("video"), uploadTrailer
 );
 
 
