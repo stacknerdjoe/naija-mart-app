@@ -23,7 +23,7 @@ const movieSchema = mongoose.mongoose.Schema({
     status: {
         type: String,
         required: true,
-        enum: ['public', 'private']
+        enum: ['public', 'private'],
     },
     type: {
         type: String,
@@ -43,7 +43,7 @@ const movieSchema = mongoose.mongoose.Schema({
             actor: { type: mongoose.Schema.Types.ObjectId, ref: 'Actor', },
             roleAs: String,
             leadActor: Boolean,
-        }
+        },
     ],
     writers: [
         {
@@ -55,6 +55,7 @@ const movieSchema = mongoose.mongoose.Schema({
         type: Object,
         url: { type: String, required: true },
         public_id: { type: String, required: true },
+        responsive: [URL],
         required: true,
     },
     trailer: {
