@@ -14,6 +14,6 @@ exports.isValidPassResetToken = async(req, res, next) => {
     const matched = await resetToken.compareToken(token)
     if(!matched) return sendError(res, 'Unauthorized access, invalid request!')
 
-    req.resetToken = resetToken
+    req.resetToken = resetToken;
     next();
-}
+};
