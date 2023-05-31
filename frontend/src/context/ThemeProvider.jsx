@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useEffect } from 'react';
 
 export const ThemeContext = createContext();
 
@@ -32,5 +32,5 @@ const updateTheme = (theme, themeToRemove) => {
   if (themeToRemove) document.documentElement.classList.remove(themeToRemove);
 
   document.documentElement.classList.add(theme);
-  localStorage.setItem("theme", theme);
+  localStorage.setItem('theme', theme);
 };

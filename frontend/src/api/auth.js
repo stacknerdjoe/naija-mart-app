@@ -1,4 +1,4 @@
-import client from "./client"
+import client from './client'
 
 export const createUser = async (userInfo) => {
 
@@ -40,10 +40,10 @@ export const verifyUserEmail = async (userInfo) => {
   
   export const getIsAuth = async (token) => {
     try {
-      const { data } = await client.get("/user/is-auth", {
+      const { data } = await client.get('/user/is-auth', {
         headers: {
-          Authorization: "Bearer " + token,
-          accept: "application/json",
+          Authorization: 'Bearer ' + token,
+          accept: 'application/json',
         },
       });
       return data;

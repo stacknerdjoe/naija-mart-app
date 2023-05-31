@@ -43,21 +43,21 @@ export default function Signup() {
 
     const handleChange = ({ target }) => {
         const { value, name } = target;
-        setUserInfo({ ...userInfo, [name]: value })
+        setUserInfo({ ...userInfo, [name]: value });
 
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { ok, error } = validateUserInfo(userInfo);
 
-        if (!ok) return updateNotification("error", error);
+        if (!ok) return updateNotification('error', error);
         
         const response = await createUser(userInfo);
         if (response.error) return console.log(response.error);
         //console.log(response.user)
 
-        navigate("/auth/verification", {
+        navigate('/auth/verification', {
             state: { user: response.user },
             replace: true,
         });

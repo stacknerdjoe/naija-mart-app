@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ImSpinner3 } from "react-icons/im";
+import { commonModalClasses } from '../../utilities/theme'
 import Container from '../container'
 import FormContainer from "../form/formContainer";
 import Title from '../form/Title'
@@ -32,13 +33,13 @@ export default function ConfirmPassword() {
     const { error, valid } = await verifyPasswordResetToken(token, id);
     setIsVerifying(false);
     if (error) {
-      navigate("/auth/reset-password", { replace: true });
+      navigate('/auth/reset-password', { replace: true });
       return updateNotification("error", error);
     }
 
     if (!valid) {
       setIsValid(false);
-      return navigate("/auth/reset-password", { replace: true });
+      return navigate('/auth/reset-password', { replace: true });
     }
 
     setIsValid(true);
@@ -53,13 +54,13 @@ export default function ConfirmPassword() {
     e.preventDefault();
 
     if (!password.one.trim())
-      return updateNotification("error", "Password is missing!");
+      return updateNotification('error', "Password is missing!");
 
     if (password.one.trim().length < 8)
-      return updateNotification("error", "Password must be 8 characters long!");
+      return updateNotification('error', "Password must be 6 characters long!");
 
     if (password.one !== password.two)
-      return updateNotification("error", "Password do not match!");
+      return updateNotification('error', "Password do not match!");
 
     const { error, message } = await resetPassword({
       newPassword: password.one,

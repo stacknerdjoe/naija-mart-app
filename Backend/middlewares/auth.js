@@ -10,7 +10,7 @@ exports.isAuth = async (req, res, next) => {
   const jwtToken = token.split('Bearer ')[1];
 
   if (!jwtToken) return sendError(res, 'Invalid token!');
-  const decode = jwt.verify(jwtToken, );
+  const decode = jwt.verify(jwtToken, 'kjfsjgfkJYTDUKILOIKLYDRTSDKIUOKfdz' );
   const { userId } = decode;
 
   const user = await User.findById(userId);
@@ -28,4 +28,4 @@ exports.isAdmin = (req, res, next) => {
 
     next();
 
-}
+};

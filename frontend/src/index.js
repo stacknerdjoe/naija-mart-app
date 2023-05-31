@@ -6,7 +6,7 @@ import ContextProviders from './context';
 
 
 
-const rootElement = document.getElementById("root");
+const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
