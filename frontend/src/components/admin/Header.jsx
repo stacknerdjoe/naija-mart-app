@@ -8,8 +8,8 @@ export default function Header({ onAddActorClick, onAddMovieClick }) {
     const { toggleTheme } = useTheme();
   
     const options = [
-      { title: "Add Movie", onClick: onAddMovieClick },
-      { title: "Add Actor", onClick: onAddActorClick },
+      { title: 'Add Movie', onClick: onAddMovieClick },
+      { title: 'Add Actor', onClick: onAddActorClick },
     ];
 
   return (
