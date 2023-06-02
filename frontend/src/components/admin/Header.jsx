@@ -48,7 +48,7 @@ export default function Header({ onAddActorClick, onAddMovieClick }) {
 
 const CreateOptions = ({options, visible, onClose }) => {
   const container = useRef();
-  const containerID = "options-container";
+  const containerID = 'options-container';
 
   useEffect(() => {
     const handleClose = (e) => {
@@ -63,9 +63,9 @@ const CreateOptions = ({options, visible, onClose }) => {
       }
     };
 
-    document.addEventListener("click", handleClose);
+    document.addEventListener('click', handleClose);
     return () => {
-      document.removeEventListener("click", handleClose);
+      document.removeEventListener('click', handleClose);
     };
   }, [visible]);
 
