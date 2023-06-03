@@ -7,10 +7,10 @@ const cloudinary = require('cloudinary').v2;
 exports.createActor = async (req, res) => {
     const { name, about, gender } = req.body;
     const { file } = req
-
+    
     const newActor = new Actor({ name, about, gender });
     if (file) {
-        const { url, public_id } = await uploadImageToCloud(file.path);
+        const { url, public_id } = await uploadImageToCloud(file.path)
 
         newActor.avatar = { url, public_id };
     }
@@ -88,7 +88,7 @@ exports.searchActor = async (req, res) => {
   
     const actors = result.map((actor) => formatActor(actor));
   
-    res.json(actors);
+    res.json({results: actors});
   };
   
   exports.getLatestActors = async (req, res) => {

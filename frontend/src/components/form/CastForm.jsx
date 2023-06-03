@@ -6,6 +6,7 @@ import { renderItem } from '../../utilities/helper';
 import { searchActor } from '../../api/actor';
 
 
+
 // const cast = [{ actor: id, roleAs: '', leadActor: true }];
 const defaultCastInfo = {
   profile: {},

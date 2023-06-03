@@ -3,6 +3,7 @@ import { useNotification } from '../../hooks';
 import {languageOptions, statusOptions, typeOptions, } from '../../utilities/options';
 import { commonInputClasses } from '../../utilities/theme';
 import DirectorSelector from '../DirectorSelector';
+import { validateMovie } from '../../utilities/validator';
 import CastForm from '../form/CastForm';
 import Submit from '../form/Submit';
 import GenresSelector from '../GenresSelector';
@@ -24,7 +25,7 @@ const defaultMovieInfo = {
     cast: [],
     director: {},
     writers: [],
-    releseDate: '',
+    releaseDate: '',
     poster: null,
     genres: [],
     type: '',
@@ -32,7 +33,7 @@ const defaultMovieInfo = {
     status: '',
 };
 
-export default function MovieForm() {
+export default function MovieForm({ busy, onSubmit }) {
     const [movieInfo, setMovieInfo] = useState({ ...defaultMovieInfo });
     const [showWritersModal, setShowWritersModal] = useState(false);
     const [showCastModal, setShowCastModal] = useState(false);
@@ -43,8 +44,48 @@ export default function MovieForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(movieInfo);
-    };
+        const { error } = validateMovie(movieInfo);
+        if (error) return updateNotification("error", error);
+    
+        // cast, tags, genres, writers
+        const { tags, genres, cast, writers, director, poster } = movieInfo;
+    
+        const formData = new FormData();
+        const finalMovieInfo = {
+          ...movieInfo,
+        };
+    
+        finalMovieInfo.tags = JSON.stringify(tags);
+        finalMovieInfo.genres = JSON.stringify(genres);
+    
+        // {
+        //   actor: { type: mongoose.Schema.Types.ObjectId, ref: "Actor" },
+        //   roleAs: String,
+        //   leadActor: Boolean,
+        // },
+       
+        const finalCast = cast.map((c) => ({
+          actor: c.profile.id,
+          roleAs: c.roleAs,
+          leadActor: c.leadActor,
+        }));
+        finalMovieInfo.cast = JSON.stringify(finalCast);
+        
+        console.log(writers);
+        if (writers.length) {
+          const finalWriters = writers.map((w) => w.id);
+          finalMovieInfo.writers = JSON.stringify(finalWriters);
+        }
+    
+        if (director.id) finalMovieInfo.director = director.id;
+        if (poster) finalMovieInfo.poster = poster;
+    
+        for (let key in finalMovieInfo) {
+          formData.append(key, finalMovieInfo[key]);
+        }
+    
+        onSubmit(formData); 
+      };
 
     const updatePosterForUI = (file) => {
         const url = URL.createObjectURL(file);
@@ -136,7 +177,7 @@ export default function MovieForm() {
         writers,
         cast,
         tags,
-        releseDate,
+        releaseDate,
         genres,
         type,
         language,
@@ -158,7 +199,7 @@ export default function MovieForm() {
                             className={
                                 commonInputClasses + ' border-b-2 font-semibold text-xl'
                             }
-                            placeholder='Titanic'
+                            placeholder='GodFather'
                         />
                     </div>
 
@@ -212,11 +253,11 @@ export default function MovieForm() {
                         type='date'
                         className={commonInputClasses + ' border-2 rounded p-1 w-auto'}
                         onChange={handleChange}
-                        name='releseDate'
-                        value={releseDate}
+                        name='releaseDate'
+                        value={releaseDate}
                     />
 
-                    <Submit value='Upload' onClick={handleSubmit} type='button' />
+                    <Submit busy={busy} value='Upload' onClick={handleSubmit} type='button' />
                 </div>
                 <div className='w-[30%] space-y-5'>
                     <PosterSelector
@@ -280,44 +321,3 @@ export default function MovieForm() {
 
 
 
-/*
-export const results = [
-    {
-      id: "1",
-      avatar:
-        "https://images.unsplash.com/photo-1643713303351-01f540054fd7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-      name: "John Doe",
-    },
-    {
-      id: "2",
-      avatar:
-        "https://images.unsplash.com/photo-1643883135036-98ec2d9e50a1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-      name: "Chisom Amara",
-    },
-    {
-      id: "3",
-      avatar:
-        "https://images.unsplash.com/photo-1578342976795-062a1b744f37?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-      name: 'Kate Henshaw',
-    },
-    {
-      id: "4",
-      avatar:
-        "https://images.unsplash.com/photo-1564227901-6b1d20bebe9d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-      name: "Ramsey Noah",
-    },
-    {
-      id: "5",
-      avatar:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-      name: "Benjamin Mensah",
-    },
-    {
-      id: "6",
-      avatar:
-        "https://images.unsplash.com/photo-1564227901-6b1d20bebe9d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80",
-      name: "Edward Howell",
-    },
-  ];
-
-  */
