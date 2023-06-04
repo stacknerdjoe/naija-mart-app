@@ -29,6 +29,7 @@ Overall, It will provide a platform for movie enthusiasts, filmmakers and the fi
 ## Workflow
 The use of gitlab to track project progress
 
-## Screencast video link
+## Screencast video links
 https://drive.google.com/file/d/1HU8eG-rI8s1vwaioVSS2MBy4vwXZKVE4/view?usp=sharing
+https://drive.google.com/file/d/1oSVncLWM6cIrqK24Zc1XopeSJdqVUE9-/view?usp=sharing
 
