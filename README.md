@@ -2,6 +2,16 @@
 
 This is a **Movie Review App** I built using the **MERN stack** (MongoDB, Express, React, Node.js). The app will allow users to browse and rate movies, and provides an **admin panel** for managing movies, actors, and reviews. This project demonstrates my skills in Full Stack development and includes both the **frontend** and **backend** components integrated into a single application.
 
+## Project Status
+
+This project is a **work in progress**. While the core functionality has been implemented, several advanced features are still under development. Here’s an overview of the current status:
+
+- **Movie Rating**: The feature allowing users to rate movies on a scale from 1 to 10 is planned but not yet implemented.
+- **Live Search**: The live search functionality for quickly finding movies is currently in development and is not yet functional.
+- **Custom Auto-scroll Slider**: A dynamic slider to display featured movies is planned and will be added soon.
+
+I am actively working on these features and will update the project as they are completed.
+
 ## Table of Contents
 
 - [Project Overview](#project-overview)
